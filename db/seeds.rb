@@ -25,9 +25,9 @@ volumes_url.each do |url|
   doc = Nokogiri::HTML(open url)
   begin
     a = doc.xpath('//table//td/a').each do |a|
-      title = a.text.split(/\s*\(|\s—\s/).first
+      title = a.text#.split(/\s*\(|\s—\s/).first
       poems = Nokogiri::HTML(open PUSHKIN_URL + a[:href])
-      
+
       body = ''
       poems.xpath("//span[@class='line' or @class='line2r']").each do |line|
         body += "#{line.text}\n"
