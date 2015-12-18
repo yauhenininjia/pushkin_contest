@@ -80,6 +80,7 @@ class ApplicationController < ActionController::Base
       token: Token.last,
       task_id: task_id
     }
+    logger.info parameters
     Net::HTTP.post_form(QUIZ_URI, parameters)
   end
 end
