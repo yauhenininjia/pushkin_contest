@@ -45,7 +45,8 @@ class ApplicationController < ActionController::Base
   
 
   def level1(question)
-    title = find_poem_by_full_string(question).title
+    poem = find_poem_by_full_string(question)
+    title = poem.try(:title)
   end
 
   def level2(question)
