@@ -17,10 +17,13 @@ class ApplicationController < ActionController::Base
 
   def registration
     token, question = params[:token], params[:question]
-    Token.create user_token: token
-
-    answer = level2 question
-
+    p "PARAMS", params
+    @token = Token.new(user_token: token)
+    if @token.save!
+      p "TOKEN SAVED"
+      answer = level2 question
+      p answer
+    end
     render json: {answer: answer}
   end
 
