@@ -28,7 +28,7 @@ volumes_url.each do |url|
       poems = Nokogiri::HTML(open PUSHKIN_URL + a[:href])
       title = poems.xpath('//h1').text
       body = ''
-      doc.xpath("//span[@class='line' or @class='line2r']").each do |line|
+      poems.xpath("//span[@class='line' or @class='line2r']").each do |line|
         body += "#{line.text}\n"
       end
       poem = Poem.new title: title, body: body
