@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
   def send_answer(answer, task_id)
     parameters = {
       answer: answer,
-      token: Token.last,
+      token: Token.last.user_token,
       task_id: task_id
     }
     logger.info parameters
