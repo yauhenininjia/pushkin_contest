@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       logger.info "TOKEN SAVED"
     end
 
-    answer = level2 question
+    answer = level2 [question]
     logger.info  answer
     render json: {answer: answer}
   end
@@ -49,26 +49,23 @@ class ApplicationController < ActionController::Base
     title = poem.try(:title)
   end
 
-  def level2(question)
-    splited = question.partition '%WORD%'
+  def level2(questions)
+    answer = []
+    questions.each do |question|
+      splited = question.partition '%WORD%'
     
-    text = find_poem_with_replaced_word(splited).try :body
-    find_replaced_word_in_poem text, splited
+      text = find_poem_with_replaced_word(splited).try :body
+      answer << find_replaced_word_in_poem(text, splited)
+    end
+    answer.join ','
   end
 
   def level3(question)
-    lines = question.split "\n"
-    first_replaced_word = level2 lines[0]
-    second_raplaced_word = level2 lines[1]
-    "#{first_replaced_word},#{second_raplaced_word}"
+    level2 question.split "\n"
   end
 
   def level4(question)
-    lines = question.split "\n"
-    first_replaced_word = level2 lines[0]
-    second_raplaced_word = level2 lines[1]
-    third_replaced_word = level2 lines[2]
-    "#{first_replaced_word},#{second_raplaced_word},#{third_replaced_word}"
+    level2 question.split "\n"
   end
 
   def find_poem_by_full_string(question)
