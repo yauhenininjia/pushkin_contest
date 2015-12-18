@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
 
   def quiz
     question, id, level = params[:question], params[:id], params[:level]
+    q = Question.new body: question, level: level, rubyroid_id: id
+    q.save
     logger.info params
     answer = send "level#{level}", question
     logger.info answer

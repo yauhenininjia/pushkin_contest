@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  body: MyString
+  level: 1
+  rubyroid_id: 1
+
+two:
+  body: MyString
+  level: 1
+  rubyroid_id: 1
