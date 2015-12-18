@@ -74,6 +74,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def level3(question)
+    lines = question.split "\n"
+    first_replaced_word = level2 lines[0]
+    second_raplaced_word = level2 lines[1]
+    "#{first_replaced_word},#{second_raplaced_word}"
+  end
+
   QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
   def send_answer(answer, task_id)
     parameters = {
