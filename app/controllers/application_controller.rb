@@ -18,7 +18,9 @@ class ApplicationController < ActionController::Base
 
   def registration
     token = params[:token]
+    logger.info params[:question]
     question = params[:question]
+
     logger.info params
     @token = Token.new(user_token: token)
     logger.info "TOKEN CREATED"
