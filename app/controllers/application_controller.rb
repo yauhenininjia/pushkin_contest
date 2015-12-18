@@ -13,8 +13,9 @@ class ApplicationController < ActionController::Base
 
   def quiz
     question, id, level = params[:question], params[:id], params[:level]
-    q = Question.new body: question, level: level, rubyroid_id: id
-    q.save
+    #q = Question.new body: question, level: level, rubyroid_id: id
+    #q.save
+    
     logger.info params
     answer = send "level#{level}", question
     logger.info answer
@@ -41,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
+  
 
   def level1(question)
     title = find_poem_by_full_string(question).title
@@ -72,6 +73,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
   def send_answer(answer, task_id)
     parameters = {
       answer: answer,
