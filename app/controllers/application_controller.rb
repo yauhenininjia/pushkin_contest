@@ -10,8 +10,9 @@ class ApplicationController < ActionController::Base
 
   def quiz
     question, id, level = params[:question], params[:id], params[:level]
-
+    logger.info params
     answer = send "level#{level}", question
+    logger.info answer
     send_answer answer, id
     render nothing: true
   end
