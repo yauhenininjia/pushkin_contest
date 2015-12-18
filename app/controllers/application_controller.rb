@@ -44,17 +44,21 @@ class ApplicationController < ActionController::Base
   QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
 
   def level1(question)
-    title = find_poem_by_string(question).title
+    title = find_poem_by_full_string(question).title
   end
 
   def level2(question)
     splited = question.partition '%WORD%'
-    logger.info question
-    text = find_poem_by_string(splited).body
+    
+    text = find_poem_with_replaced_word(splited).body
     find_replaced_word_in_poem text, splited
   end
 
-  def find_poem_by_string(splited)
+  def find_poem_by_full_string(question)
+    find_poem_with_replaced_word question.partition ''
+  end
+
+  def find_poem_with_replaced_word(splited)
     Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
   end
 
