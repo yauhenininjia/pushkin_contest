@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   def level2(question)
     splited = question.partition '%WORD%'
     
-    text = find_poem_with_replaced_word(splited).body
+    text = find_poem_with_replaced_word(splited).try :body
     find_replaced_word_in_poem text, splited
   end
 
@@ -66,11 +66,11 @@ class ApplicationController < ActionController::Base
 
   def find_replaced_word_in_poem(text, splited)
     if splited[0].empty?
-      replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1]
+      replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1] if text
     elsif splited[2].empty?
-      replaced_word = text.split(splited[0])[1].split(/\s|,|\.|\?|!|:|;|\(|\)|"/)[0]
+      replaced_word = text.split(splited[0])[1].split(/\s|,|\.|\?|!|:|;|\(|\)|"/)[0] if text
     else
-      replaced_word = text.split(splited[0])[1].split(splited[2])[0]
+      replaced_word = text.split(splited[0])[1].split(splited[2])[0] if text
     end
   end
 
