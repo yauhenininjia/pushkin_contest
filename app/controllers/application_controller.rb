@@ -18,12 +18,11 @@ class ApplicationController < ActionController::Base
 
   def registration
     token, question = params[:token], params[:question]
-    p "PARAMS", params
     logger.info "PARAMS", params
 
     @token = Token.new(user_token: token)
+    logger.info "TOKEN CREATED"
     if @token.save!
-      p "TOKEN SAVED"
       logger.info "TOKEN SAVED"
     end
 
