@@ -56,6 +56,21 @@ class ApplicationController < ActionController::Base
     find_replaced_word_in_poem text, splited
   end
 
+  def level3(question)
+    lines = question.split "\n"
+    first_replaced_word = level2 lines[0]
+    second_raplaced_word = level2 lines[1]
+    "#{first_replaced_word},#{second_raplaced_word}"
+  end
+
+  def level4(question)
+    lines = question.split "\n"
+    first_replaced_word = level2 lines[0]
+    second_raplaced_word = level2 lines[1]
+    third_replaced_word = level2 lines[2]
+    "#{first_replaced_word},#{second_raplaced_word},#{third_replaced_word}"
+  end
+
   def find_poem_by_full_string(question)
     find_poem_with_replaced_word question.partition ''
   end
@@ -74,14 +89,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def level3(question)
-    lines = question.split "\n"
-    first_replaced_word = level2 lines[0]
-    second_raplaced_word = level2 lines[1]
-    "#{first_replaced_word},#{second_raplaced_word}"
-  end
-
   QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
+
   def send_answer(answer, task_id)
     parameters = {
       answer: answer,
