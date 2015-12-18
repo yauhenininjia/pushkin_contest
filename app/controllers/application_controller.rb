@@ -7,21 +7,43 @@ class ApplicationController < ActionController::Base
     render text: 'Pushkin'
   end
 
-  
+  def quiz
+    question, id, level = params[:question], params[:id], params[:level]
+
+    answer = send "level#{level}", question
+    send_answer answer, id
+    render nothing: true
+  end
 
   def registration
     token, question = params[:token], params[:question]
     Token.create user_token: token
 
     answer = level2 question
+
     render json: {answer: answer}
   end
 
   private
 
+  QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
+
+  def level1(question)
+    title = find_poem_by_string(question).title
+  end
+
   def level2(question)
     splited = question.partition '%WORD%'
-    text = Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first.body
+
+    text = find_poem_by_string(splited).body
+    find_replaced_word_in_poem text, splited
+  end
+
+  def find_poem_by_string(splited)
+    Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
+  end
+
+  def find_replaced_word_in_poem(text, splited)
     if splited[0].empty?
       replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1]
     elsif splited[2].empty?
@@ -29,7 +51,14 @@ class ApplicationController < ActionController::Base
     else
       replaced_word = text.split(splited[0])[1].split(splited[2])[0]
     end
+  end
 
-    replaced_word
+  def send_answer(answer, task_id)
+    parameters = {
+      answer: answer,
+      token: Token.last,
+      task_id: task_id
+    }
+    Net::HTTP.post_form(QUIZ_URI, parameters)
   end
 end

@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   root 'application#index'
-  get 'registration' => 'application#registration'
+  post 'registration' => 'application#registration'
+  post 'quiz' => 'application#quiz'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
