@@ -2,36 +2,42 @@
 
 level1:
   id: 1
-  body: "Буря мглою небо кроет"
+  body: "Буря мглою небо кроет,"
   level: 1
   rubyroid_id: 1
 
 level2_begin:
   id: 2
-  body: "%WORD% мглою небо кроет"
+  body: "%WORD% мглою небо кроет,"
   level: 2
-  rubyroid_id: 1
+  rubyroid_id: 2
 
 level2_middle:
   id: 3
-  body: "Буря мглою %WORD% кроет"
+  body: "Буря мглою %WORD% кроет,"
   level: 2
-  rubyroid_id: 1
+  rubyroid_id: 3
 
 level2_end:
   id: 4
-  body: "Буря мглою небо %WORD%"
+  body: "Буря мглою небо %WORD%,"
   level: 2
-  rubyroid_id: 1
+  rubyroid_id: 4
 
 level3:
   id: 5
   body: "%WORD% мглою небо кроет,\nВихри снежные %WORD%;\n"
   level: 3
-  rubyroid_id: 1
+  rubyroid_id: 5
 
 level4:
   id: 6
   body: "%WORD% мглою небо кроет,\nВихри снежные %WORD%;\nТо, как %WORD%, она завоет,\n"
   level: 4
-  rubyroid_id: 1
+  rubyroid_id: 6
+
+level5:
+  id: 7
+  body: "Буря мглою кучки кроет,"
+  level: 5
+  rubyroid_id: 7

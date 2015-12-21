@@ -27,5 +27,10 @@ level3:
 
 level4:
   body: "Буря,крутя,зверь"
-  question_id: 5
+  question_id: 6
+  level: 3
+
+level5:
+  body: "небо,кучки"
+  question_id: 7
   level: 3

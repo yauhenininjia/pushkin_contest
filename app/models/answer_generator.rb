@@ -23,6 +23,16 @@ class AnswerGenerator < ActiveRecord::Base
     level2 *question.split("\n")
   end
 
+  def level5(question)
+    q = question.split
+    q.each do |current_word|
+      new_question = q.join(' ').sub current_word, '%WORD%'
+      answer = level2(new_question)
+
+      return "#{answer},#{current_word}" unless answer.blank?
+    end
+  end
+
   private
 
   def find_poem_by_full_string(question)

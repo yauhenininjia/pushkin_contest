@@ -28,7 +28,7 @@ class AnswerGeneratorTest < ActiveSupport::TestCase
     generator = AnswerGenerator.new
     question = questions :level3
     answer = answers :level3
-    p answer, question
+    
     assert_equal answer.body, generator.level3(question.body)
   end
 
@@ -36,7 +36,15 @@ class AnswerGeneratorTest < ActiveSupport::TestCase
     generator = AnswerGenerator.new
     question = questions :level4
     answer = answers :level4
-    p answer, question
+    
     assert_equal answer.body, generator.level4(question.body)
+  end
+
+  test "level5" do
+    generator = AnswerGenerator.new
+    question = questions :level5
+    answer = answers :level5
+    
+    assert_equal answer.body, generator.level5(question.body)
   end
 end
