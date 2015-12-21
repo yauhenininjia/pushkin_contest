@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+level1:
+  body: "Зимний вечер"
+  question_id: 
+  level: 1
+
+level2_begin:
+  body: Буря
+  question_id: 2
+  level: 2
+
+level2_middle:
+  body: небо
+  question_id: 3
+  level: 2
+
+level2_end:
+  body: кроет
+  question_id: 4
+  level: 2
+
+level3:
+  body: "Буря,крутя"
+  question_id: 5
+  level: 3
+
+level4:
+  body: "Буря,крутя,зверь"
+  question_id: 5
+  level: 3
