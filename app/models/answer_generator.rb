@@ -28,7 +28,6 @@ class AnswerGenerator < ActiveRecord::Base
     q.each do |current_word|
       new_question = q.join(' ').sub /\s#{current_word}\s/, ' %WORD% '
       answer = level2(new_question)
-      binding.pry
       return "#{answer},#{current_word}" unless answer.blank?
     end
     nil
