@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     logger.info params
 
     answer = AnswerGenerator.new.send "level#{level}", question
-    a = Answer.new body: answer, level: level, question: question
+    a = Answer.new body: answer, level: level, question: q
 
     q.save
     a.save
