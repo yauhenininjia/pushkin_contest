@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
     answer = AnswerGenerator.new.send "level#{level}", question
     a = Answer.new body: answer, level: level, question: q
 
-    q.save
-    a.save
+    #q.save
+    #a.save
 
     logger.info answer
 
