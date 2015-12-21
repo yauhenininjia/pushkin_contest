@@ -13,12 +13,18 @@ class ApplicationController < ActionController::Base
 
   def quiz
     question, id, level = params[:question], params[:id], params[:level]
-    #q = Question.new body: question, level: level, rubyroid_id: id
-    #q.save
-    
+    q = Question.new body: question, level: level, rubyroid_id: id
+
     logger.info params
+
     answer = Answer.generator.send "level#{level}", question
+    a = Answer.new body: answer, level: level, question: question
+
+    q.save
+    a.save
+
     logger.info answer
+    
     send_answer answer, id
     render nothing: true
   end

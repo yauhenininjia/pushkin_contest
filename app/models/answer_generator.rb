@@ -23,6 +23,8 @@ class AnswerGenerator < ActiveRecord::Base
     level2 *question.split("\n")
   end
 
+  private
+
   def find_poem_by_full_string(question)
     find_poem_with_replaced_word question.partition ''
   end
