@@ -28,9 +28,14 @@ level3:
 level4:
   body: "Буря,крутя,зверь"
   question_id: 6
-  level: 3
+  level: 4
 
 level5:
   body: "небо,кучки"
   question_id: 7
-  level: 3
+  level: 5
+
+level6:
+  body: "То, как зверь, она завоет,"
+  question_id: 8
+  level: 6

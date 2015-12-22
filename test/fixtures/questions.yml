@@ -41,3 +41,9 @@ level5:
   body: "Буря мглою кучки кроет,"
   level: 5
   rubyroid_id: 7
+
+level6:
+  id: 8
+  body: "оТ кка рвезь ано азвеот"
+  level: 6
+  rubyroid_id: 8

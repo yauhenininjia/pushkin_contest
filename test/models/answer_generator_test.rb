@@ -47,4 +47,12 @@ class AnswerGeneratorTest < ActiveSupport::TestCase
     
     assert_equal answer.body, generator.level5(question.body)
   end
+
+  test "level6" do
+    generator = AnswerGenerator.new
+    question = questions :level6
+    answer = answers :level6
+    
+    assert_equal answer.body, generator.level6(question.body)
+  end
 end
