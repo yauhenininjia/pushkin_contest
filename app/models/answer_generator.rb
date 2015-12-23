@@ -37,7 +37,7 @@ class AnswerGenerator < ActiveRecord::Base
 
   def level6(question)
     q = []
-    dictionary = words
+    @@dictionary ||= words
     question.split.each do |anagram|
       q << dictionary[anagram.chars.sort.join]
     end
