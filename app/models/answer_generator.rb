@@ -39,7 +39,7 @@ class AnswerGenerator < ActiveRecord::Base
     q = []
     @@dictionary ||= words
     question.split.each do |anagram|
-      q << dictionary[anagram.chars.sort.join]
+      q << @@dictionary[anagram.chars.sort.join]
     end
     puts q.join ' '
     
