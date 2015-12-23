@@ -12,7 +12,9 @@ class ApplicationController < ActionController::Base
   end
 
   def quiz
-    question, id, level = params[:question], params[:id], params[:level]
+    question = params[:question]
+    id = params[:id]
+    level = params[:level]
     #q = Question.new body: question, level: level, rubyroid_id: id
 
     answer = AnswerGenerator.new.send "level#{level}", question
