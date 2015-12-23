@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     question, id, level = params[:question], params[:id], params[:level]
     q = Question.new body: question, level: level, rubyroid_id: id
 
-    logger.info params
+    #logger.info params
 
     answer = AnswerGenerator.new.send "level#{level}", question
     a = Answer.new body: answer, level: level, question: q
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     q.save
     a.save
 
-    logger.info answer
+    #logger.info answer
 
     send_answer answer, id
     render nothing: true
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
       token: Token.last.user_token,
       task_id: task_id
     }
-    logger.info parameters
+    #logger.info parameters
     Net::HTTP.post_form(QUIZ_URI, parameters)
   end
 end
