@@ -67,7 +67,7 @@ class AnswerGenerator < ActiveRecord::Base
   def find_string_with_punctuation_in_poem_by_string_without_punctuation(poem, string)
     poem.try(:body).each_line do |line|
       return line.sub "\n", '' if line =~ Regexp.new(regexp_with_punctuation_from string)
-    end
+    end unless poem.nil?
   end
 
   def find_replaced_word_in_poem(text, splited)
