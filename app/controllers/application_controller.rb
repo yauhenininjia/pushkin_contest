@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     question, id, level = params[:question], params[:id], params[:level]
     q = Question.new body: question, level: level, rubyroid_id: id
 
-    #answer = AnswerGenerator.new.send "level#{level}", question
+    answer = AnswerGenerator.new.send "level#{level}", question
     #a = Answer.new body: answer, level: level, question: q
 
     #q.save
