@@ -2,8 +2,11 @@ class AnswerGenerator < ActiveRecord::Base
 
 
   def level1(question)
-    poem = find_poem_by_full_string(question)
-    title = poem.try(:title)
+    #poem = find_poem_by_full_string(question)
+    #title = poem.try(:title)
+
+    Poem.search(question).first.title
+
     #Poem.pluck(:body, :title).find { |p| p[0] =~ /#{question}/ }[1]
   end
 

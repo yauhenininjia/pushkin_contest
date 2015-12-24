@@ -47,3 +47,5 @@ group :development do
 end
 
 gem 'nokogiri'
+gem 'thinking-sphinx'
+gem 'mysql2'
