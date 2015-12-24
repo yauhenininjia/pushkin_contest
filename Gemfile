@@ -48,4 +48,5 @@ end
 
 gem 'nokogiri'
 gem 'thinking-sphinx'
+gem 'flying-sphinx'
 gem 'mysql2'
