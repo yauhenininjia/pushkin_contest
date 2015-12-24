@@ -58,7 +58,8 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_poem_with_replaced_word(splited)
-    Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
+    #Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
+    Poem.search("#{splited[0]} * #{splited[2]}").first
   end
 
   def find_poem_by_string_without_punctuation(string)

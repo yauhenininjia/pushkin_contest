@@ -5,7 +5,7 @@ class AnswerGeneratorTest < ActiveSupport::TestCase
     generator = AnswerGenerator.new
     question = questions :level1
     answer = answers :level1
-
+    
     assert_equal answer.body, generator.level1(question.body)
   end
 
