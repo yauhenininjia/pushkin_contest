@@ -51,6 +51,18 @@ class AnswerGenerator < ActiveRecord::Base
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
 
+  def level7(question)
+    q = []
+    @@dictionary ||= lines
+    question.split.each do |anagram|
+      q << @@dictionary[anagram.chars.sort.join]
+    end
+    puts q.join ' '
+    
+    poem = find_poem_by_string_without_punctuation q.join ' '
+    find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
+  end
+
   #private
 
   def find_poem_by_full_string(string)
@@ -101,6 +113,24 @@ class AnswerGenerator < ActiveRecord::Base
 
     end
     words_hash
+  end
+
+  def lines
+    lines = []
+    Poem.all.pluck(:body).each do |poem|
+      poem.split("\n").each do |line|
+        lines << line.gsub(/,|\.|\?|!|:|;|\)|—/, '')
+      end
+    end
+
+    lines.uniq!
+    lines_hash = Hash.new
+    lines.each do |line|
+      word = line.chomp
+      lines_hash[word.split('').sort!.join('').strip] = word
+
+    end
+    lines_hash
   end
 
   def regexp_with_punctuation_from(string)
