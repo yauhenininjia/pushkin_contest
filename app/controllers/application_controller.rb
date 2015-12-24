@@ -15,14 +15,14 @@ class ApplicationController < ActionController::Base
     question = params[:question]
     id = params[:id]
     level = params[:level]
-    q = Question.new body: question, level: level, rubyroid_id: id
+    #q = Question.new body: question, level: level, rubyroid_id: id
     
     @@generator ||= AnswerGenerator.new
     answer = @@generator.send "level#{level}", question
-    a = Answer.new body: answer, level: level, question: q
+    #a = Answer.new body: answer, level: level, question: q
 
-    q.save
-    a.save
+    #q.save
+    #a.save
 
     logger.info answer
 
