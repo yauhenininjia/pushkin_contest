@@ -54,9 +54,9 @@ class AnswerGenerator < ActiveRecord::Base
   def level7(question)
     q = []
     @@dictionary ||= lines
-    question.split.each do |anagram|
-      q << @@dictionary[anagram.chars.sort.join]
-    end
+    #question.split.each do |anagram|
+      q << @@dictionary[question.chars.sort.join.strip]
+    #end
     puts q.join ' '
     
     poem = find_poem_by_string_without_punctuation q.join ' '
