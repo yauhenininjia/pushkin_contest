@@ -23,7 +23,6 @@ class ApplicationController < ActionController::Base
 
     q.save
     a.save
-    logger.info q.body, a.body
 
     logger.info answer
 
