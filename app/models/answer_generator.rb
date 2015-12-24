@@ -2,10 +2,10 @@ class AnswerGenerator < ActiveRecord::Base
 
 
   def level1(question)
-    #poem = find_poem_by_full_string(question)
-    #title = poem.try(:title)
+    poem = find_poem_by_full_string(question)
+    title = poem.try(:title)
 
-    Poem.search(question).first.title
+    #Poem.search(question).first.title
 
     #Poem.pluck(:body, :title).find { |p| p[0] =~ /#{question}/ }[1]
   end
@@ -58,8 +58,8 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_poem_with_replaced_word(splited)
-    #Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
-    Poem.search("#{splited[0]} * #{splited[2]}").first
+    Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
+    #Poem.search("#{splited[0]} * #{splited[2]}").first
   end
 
   def find_poem_by_string_without_punctuation(string)

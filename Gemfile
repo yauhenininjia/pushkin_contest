@@ -47,6 +47,7 @@ group :development do
 end
 
 gem 'nokogiri'
-gem 'thinking-sphinx'
-gem 'flying-sphinx'
-gem 'mysql2'
+#gem 'thinking-sphinx'
+#gem 'flying-sphinx'
+#gem 'mysql2'
+#gem 'elasticsearch-model'
