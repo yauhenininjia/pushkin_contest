@@ -24,9 +24,9 @@ class ApplicationController < ActionController::Base
     #q.save
     #a.save
 
-    logger.info answer
+    #logger.info answer
 
-    send_answer answer, id
+    #send_answer answer, id
     render nothing: true
   end
 
@@ -52,9 +52,10 @@ class ApplicationController < ActionController::Base
   QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
 
   def send_answer(answer, task_id)
+    @@token ||= Token.last.user_token
     parameters = {
       answer: answer,
-      token: Token.last.user_token,
+      token: @@token,
       task_id: task_id
     }
     #logger.info parameters

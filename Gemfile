@@ -47,3 +47,4 @@ group :development do
 end
 
 gem 'nokogiri'
+gem 'textacular', '~> 3.0'

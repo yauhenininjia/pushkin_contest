@@ -2,8 +2,10 @@ class AnswerGenerator < ActiveRecord::Base
 
 
   def level1(question)
-    poem = find_poem_by_full_string(question)
-    title = poem.try(:title)
+    #poem = find_poem_by_full_string(question)
+    #title = poem.try(:title)
+
+    Poem.basic_search(question).first.title
 
     #Poem.search(question).first.title
 
@@ -45,7 +47,7 @@ class AnswerGenerator < ActiveRecord::Base
     question.split.each do |anagram|
       q << @@dictionary[anagram.chars.sort.join]
     end
-    puts q.join ' '
+    #puts q.join ' '
     
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
@@ -54,14 +56,16 @@ class AnswerGenerator < ActiveRecord::Base
   def level7(question)
     q = []
     @@dictionary ||= lines
-    #question.split.each do |anagram|
-      q << @@dictionary[question.chars.sort.join.strip]
-    #end
-    puts q.join ' '
     
+    q << @@dictionary[question.chars.sort.join.strip]
+    
+    #puts q.join ' '
+
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
+
+  #Parameters: {"question"=>"втн н еястлеН яи овчаа", "id"=>794977, "level"=>8}
 
   #private
 
@@ -70,8 +74,9 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_poem_with_replaced_word(splited)
-    Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
+    #Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
     #Poem.search("#{splited[0]} * #{splited[2]}").first
+    Poem.basic_search("#{splited[0]} * #{splited[2]}").first
   end
 
   def find_poem_by_string_without_punctuation(string)
@@ -95,6 +100,9 @@ class AnswerGenerator < ActiveRecord::Base
     else
       replaced_word = text.split(splited[0])[1].split(splited[2])[0] if text
     end
+
+    # up to 9 times slowly
+    #text.split("\n").find{ |s| s =~ /#{splited[0]}.*#{splited[2]}/  }.sub(splited[0], '').sub(splited[2], '')
   end
 
   def words

@@ -11,6 +11,9 @@ class Poem < ActiveRecord::Base
   end
 end
 =end
+  def self.searchable_language
+    'russian'
+  end
 end
 
 =begin
