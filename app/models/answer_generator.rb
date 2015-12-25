@@ -78,7 +78,6 @@ class AnswerGenerator < ActiveRecord::Base
     q = []
     @@dictionary ||= lines
     
-    break_condition = false
     question.length.times do |i|
       ['А'..'Я', 'а'..'я'].each do |range|
         range.each do |char|
@@ -86,10 +85,7 @@ class AnswerGenerator < ActiveRecord::Base
           duplicate[i] = char
 
           q << @@dictionary[duplicate.chars.sort.join.strip]
-          break_condition = true unless q.empty?
-          break if break_condition
         end
-        break if break_condition
       end
     end
     q.uniq!.compact!
