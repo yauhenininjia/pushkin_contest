@@ -17,8 +17,13 @@ class AnswerGenerator < ActiveRecord::Base
     questions.each do |question|
       splited = question.partition '%WORD%'
       
-      text = find_poem_with_replaced_word(splited).try :body
+      @poem ||= find_poem_with_replaced_word(splited)
+      
+      text = @poem.try :body
+      
       answer << find_replaced_word_in_poem(text, splited)
+      
+      @poem = nil if answer.compact.empty?
     end
     answer.join ','
   end
@@ -32,10 +37,14 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def level5(question)
-    q = question.split
+    q = question.gsub(/,|\.|\?|!|:|;|\)/, '').split
     q.each do |current_word|
-      new_question = q.join(' ').sub /\s#{current_word}\s/, ' %WORD% '
+      q[q.index current_word] = '%WORD%'
+      new_question = q.join ' '#q.join(' ').sub /\s#{current_word}\s/, ' %WORD% '
+      
+      q[q.index '%WORD%'] = current_word
       answer = level2(new_question)
+      
       return "#{answer},#{current_word}" unless answer.blank?
     end
     nil
@@ -65,7 +74,32 @@ class AnswerGenerator < ActiveRecord::Base
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
 
+  def level8(question)
+    q = []
+    @@dictionary ||= lines
+    
+    question.length.times do |i|
+      ['А'..'Я', 'а'..'я'].each do |range|
+        range.each do |char|
+          duplicate = question.dup
+          duplicate[i] = char
+
+          #q << @@dictionary[question.chars.sort.join.strip]
+          q << @@dictionary[duplicate.chars.sort.join.strip]
+        end
+      end
+    end
+    q.uniq!.compact!
+    #puts q.join ' '
+
+    #binding.pry
+    poem = find_poem_by_string_without_punctuation q.join ' '
+    find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
+  end
+
+  #7 "ротаик вбонесвройС й йытто"
   #Parameters: {"question"=>"втн н еястлеН яи овчаа", "id"=>794977, "level"=>8}
+  # "лр ыо нлвечдГНаеуиа уциоя "
 
   #private
 
@@ -94,11 +128,11 @@ class AnswerGenerator < ActiveRecord::Base
 
   def find_replaced_word_in_poem(text, splited)
     if splited[0].empty?
-      replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1] if text
+      replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1] if text && text.length > text.split(splited[2])[0].length
     elsif splited[2].empty?
-      replaced_word = text.split(splited[0])[1].split(/\s|,|\.|\?|!|:|;|\(|\)|"/)[0] if text
+      replaced_word = text.split(splited[0])[1].split(/\s|,|\.|\?|!|:|;|\(|\)|"/)[0] if text && text.length > text.split(splited[0])[1].length
     else
-      replaced_word = text.split(splited[0])[1].split(splited[2])[0] if text
+      replaced_word = text.split(splited[0])[1].split(splited[2])[0] if text && text.split(splited[0])[1] && text.length > text.split(splited[0])[1].length
     end
 
     # up to 9 times slowly
