@@ -85,9 +85,9 @@ class AnswerGenerator < ActiveRecord::Base
           duplicate[i] = char
 
           q << @@dictionary[duplicate.chars.sort.join.strip]
-          break unless q.emty?
+          break unless q.empty?
         end
-        break unless q.emty?
+        break unless q.empty?
       end
     end
     q.uniq!.compact!
