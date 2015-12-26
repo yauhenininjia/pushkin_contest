@@ -60,6 +60,6 @@ class ApplicationController < ActionController::Base
     }
     
     res = Net::HTTP.post_form(QUIZ_URI, parameters)
-    logger.info "#RESPONCE: {res.body}"
+    logger.info "#RESPONCE: #{res.body}"
   end
 end
