@@ -149,7 +149,7 @@ class AnswerGenerator < ActiveRecord::Base
     # up to 9 times slowly
     poem = text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/ } if text
     
-    poem.sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip if text && poem
+    poem.sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip.gsub(/,|\.|\?|!|:|;|\)|—/, '') if text && poem
   end
 
   def words
