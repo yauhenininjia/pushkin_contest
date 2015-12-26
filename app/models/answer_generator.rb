@@ -145,7 +145,7 @@ class AnswerGenerator < ActiveRecord::Base
     
     replaced_word
 =end
-    binding.pry
+    
     # up to 9 times slowly
     text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/  }
       .sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip
