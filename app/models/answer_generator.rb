@@ -148,7 +148,7 @@ class AnswerGenerator < ActiveRecord::Base
     
     # up to 9 times slowly
     text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/  }
-      .sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip
+      .sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip if text
   end
 
   def words
