@@ -22,7 +22,7 @@ class AnswerGenerator < ActiveRecord::Base
       text = @poem.try :body
       
       answer << find_replaced_word_in_poem(text, splited)
-      
+      #binding.pry
       @poem = nil if answer.compact.empty?
     end
     answer.join ','
@@ -113,7 +113,10 @@ class AnswerGenerator < ActiveRecord::Base
   def find_poem_with_replaced_word(splited)
     #Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
     #Poem.search("#{splited[0]} * #{splited[2]}").first
-    Poem.basic_search("#{splited[0]} * #{splited[2]}").first
+    Poem.basic_search("#{splited[0]} * #{splited[2]}").each do |poem|
+      return poem if poem.body =~ /#{splited[0]}.*#{splited[2]}/
+    end
+    nil
   end
 
   def find_poem_by_string_without_punctuation(string)
