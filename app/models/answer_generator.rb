@@ -115,7 +115,7 @@ class AnswerGenerator < ActiveRecord::Base
     #Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
     #Poem.search("#{splited[0]} * #{splited[2]}").first
     Poem.basic_search("#{splited[0]} * #{splited[2]}").each do |poem|
-      return poem if poem.body =~ /#{splited[0]}.*#{splited[2]}/
+      return poem if poem.body =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/
     end
     nil
   end
@@ -145,9 +145,10 @@ class AnswerGenerator < ActiveRecord::Base
     
     replaced_word
 =end
-
+    binding.pry
     # up to 9 times slowly
-    text.split("\n").find{ |s| s =~ /#{splited[0]}.*#{splited[2]}/  }.sub(splited[0], '').sub(splited[2], '')
+    text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/  }
+      .sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip
   end
 
   def words
