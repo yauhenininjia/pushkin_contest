@@ -22,7 +22,7 @@ class AnswerGenerator < ActiveRecord::Base
       text = @poem.try :body
       
       answer << find_replaced_word_in_poem(text, splited)
-      #binding.pry
+      
       @poem = nil if answer.compact.empty?
     end
     answer.join ','
