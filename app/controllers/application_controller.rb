@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
     #q.save
     #a.save
-
+    
     logger.info answer
 
     send_answer answer, id
