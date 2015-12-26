@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
     #q.save
     #a.save
-    
+
     logger.info answer
 
     send_answer answer, id
@@ -58,7 +58,8 @@ class ApplicationController < ActionController::Base
       token: @@token,
       task_id: task_id
     }
-    #logger.info parameters
-    Net::HTTP.post_form(QUIZ_URI, parameters)
+    
+    res = Net::HTTP.post_form(QUIZ_URI, parameters)
+    logger.info "#RESPONCE: {res.body}"
   end
 end
