@@ -48,4 +48,4 @@ end
 
 gem 'nokogiri'
 gem 'textacular', '~> 3.0'
-gem 'curb'
+gem 'patron'

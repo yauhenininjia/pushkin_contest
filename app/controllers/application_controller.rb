@@ -59,7 +59,8 @@ class ApplicationController < ActionController::Base
       task_id: task_id
     }
     
-    res = Curl.post(QUIZ_URI.to_s, parameters)#Net::HTTP.post_form(QUIZ_URI, parameters)
-    logger.info "RESPONCE: #{res.body_str}"
+    @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by'})
+    res = @@session.post('/quiz', parameters)#Curl.post(QUIZ_URI.to_s, parameters)#Net::HTTP.post_form(QUIZ_URI, parameters)
+    logger.info "RESPONCE: #{res.body}"
   end
 end
