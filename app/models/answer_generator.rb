@@ -16,7 +16,7 @@ class AnswerGenerator < ActiveRecord::Base
     answer = []
     questions.each do |question|
       splited = question.partition '%WORD%'
-      
+      binding.pry
       @poem ||= find_poem_with_replaced_word(splited)
       
       text = @poem.try :body
@@ -130,6 +130,7 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_replaced_word_in_poem(text, splited)
+
     if splited[0].empty?
       replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1] if text && text.length > text.split(splited[2])[0].length
     elsif splited[2].empty?
@@ -137,6 +138,8 @@ class AnswerGenerator < ActiveRecord::Base
     else
       replaced_word = text.split(splited[0])[1].split(splited[2])[0] if text && text.split(splited[0])[1] && text.length > text.split(splited[0])[1].length
     end
+    binding.pry
+    replaced_word
 
     # up to 9 times slowly
     #text.split("\n").find{ |s| s =~ /#{splited[0]}.*#{splited[2]}/  }.sub(splited[0], '').sub(splited[2], '')
