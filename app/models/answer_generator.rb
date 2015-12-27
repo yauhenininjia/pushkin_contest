@@ -25,7 +25,6 @@ class AnswerGenerator < ActiveRecord::Base
       
       poem = nil if answer.compact.empty?
     end
-    logger.info "ANSWER.JOIN #{answer}"
     answer.join ','
   end
 
@@ -147,9 +146,7 @@ class AnswerGenerator < ActiveRecord::Base
 
 =begin
     # up to 9 times slowly
-    logger.info "SPLITED: #{splited}"
     poem = text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/ } if text
-    logger.info "POEM: #{poem}" if text && poem
     poem.sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip.gsub(/,|\.|\?|!|:|;|\)|—/, '') if text && poem
 =end
   end

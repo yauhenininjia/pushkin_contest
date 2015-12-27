@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     #q.save
     #a.save
 
-    logger.info answer
+    #logger.info answer
 
     send_answer answer, id
     render nothing: true
