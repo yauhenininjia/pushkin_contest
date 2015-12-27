@@ -25,6 +25,7 @@ class AnswerGenerator < ActiveRecord::Base
       
       @poem = nil if @answer.compact.empty?
     end
+    logger.info "ANSWER.JOIN #{@answer.join ','}"
     @answer.join ','
   end
 
