@@ -21,11 +21,11 @@ class AnswerGenerator < ActiveRecord::Base
       
       text = @@poem.try :body
       
-      @answer << find_replaced_word_in_poem(text, splited)
+      answer << find_replaced_word_in_poem(text, splited)
       
       @@poem = nil if answer.compact.empty?
     end
-    logger.info "ANSWER.JOIN #{@answer}"
+    logger.info "ANSWER.JOIN #{answer}"
     answer.join ','
   end
 
