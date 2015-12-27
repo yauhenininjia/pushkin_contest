@@ -52,9 +52,9 @@ class AnswerGenerator < ActiveRecord::Base
 
   def level6(question)
     q = []
-    @@dictionary ||= words
+    @@words_dictionary ||= words
     question.split.each do |anagram|
-      q << @@dictionary[anagram.chars.sort.join]
+      q << @@words_dictionary[anagram.chars.sort.join]
     end
     #puts q.join ' '
     
@@ -64,9 +64,9 @@ class AnswerGenerator < ActiveRecord::Base
 
   def level7(question)
     q = []
-    @@dictionary ||= lines
+    @@lines_dictionary ||= lines
     
-    q << @@dictionary[question.chars.sort.join.strip]
+    q << @@lines_dictionary[question.chars.sort.join.strip]
     
     #puts q.join ' '
 
@@ -76,7 +76,7 @@ class AnswerGenerator < ActiveRecord::Base
 
   def level8(question)
     q = []
-    @@dictionary ||= lines
+    @@lines_dictionary ||= lines
     
     question.length.times do |i|
       ['А'..'Я', 'а'..'я'].each do |range|
@@ -84,7 +84,7 @@ class AnswerGenerator < ActiveRecord::Base
           duplicate = question.dup
           duplicate[i] = char
 
-          q << @@dictionary[duplicate.chars.sort.join.strip]
+          q << @@lines_dictionary[duplicate.chars.sort.join.strip]
           #binding.pry
           
           break unless q.compact.empty?
