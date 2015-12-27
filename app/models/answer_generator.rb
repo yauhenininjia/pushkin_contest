@@ -17,13 +17,13 @@ class AnswerGenerator < ActiveRecord::Base
     questions.each do |question|
       splited = question.partition '%WORD%'
       
-      @@poem ||= find_poem_with_replaced_word(splited)
+      poem ||= find_poem_with_replaced_word(splited)
       
-      text = @@poem.try :body
+      text = poem.try :body
       
       answer << find_replaced_word_in_poem(text, splited)
       
-      @@poem = nil if answer.compact.empty?
+      poem = nil if answer.compact.empty?
     end
     logger.info "ANSWER.JOIN #{answer}"
     answer.join ','
