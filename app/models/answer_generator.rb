@@ -13,7 +13,7 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def level2(*questions)
-    answer = []
+    @answer = []
     questions.each do |question|
       splited = question.partition '%WORD%'
       
@@ -21,11 +21,11 @@ class AnswerGenerator < ActiveRecord::Base
       
       text = @poem.try :body
       
-      answer << find_replaced_word_in_poem(text, splited)
+      @answer << find_replaced_word_in_poem(text, splited)
       
       @poem = nil if answer.compact.empty?
     end
-    answer.join ','
+    @answer.join ','
   end
 
   def level3(question)
