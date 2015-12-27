@@ -134,7 +134,7 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_replaced_word_in_poem(text, splited)
-=begin
+
     if splited[0].empty?
       replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1] if text && text.length > text.split(splited[2])[0].length
     elsif splited[2].empty?
@@ -144,13 +144,14 @@ class AnswerGenerator < ActiveRecord::Base
     end
     
     replaced_word
-=end
-    
+
+=begin
     # up to 9 times slowly
     logger.info "SPLITED: #{splited}"
     poem = text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/ } if text
     logger.info "POEM: #{poem}" if text && poem
     poem.sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip.gsub(/,|\.|\?|!|:|;|\)|—/, '') if text && poem
+=end
   end
 
   def words
