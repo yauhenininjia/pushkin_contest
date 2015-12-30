@@ -56,7 +56,9 @@ class AnswerGenerator < ActiveRecord::Base
     question.split.each do |anagram|
       q << @@words_dictionary[anagram.chars.sort.join]
     end
-    #puts q.join ' '
+
+    #@@lines_dictionary ||= lines
+    #q << @@lines_dictionary[(Unicode::upcase question).chars.sort.join.strip]
     
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
@@ -66,7 +68,7 @@ class AnswerGenerator < ActiveRecord::Base
     q = []
     @@lines_dictionary ||= lines
     
-    q << @@lines_dictionary[question.chars.sort.join.strip]
+    q << @@lines_dictionary[(Unicode::upcase question).chars.sort.join.strip]
     
     #puts q.join ' '
 
@@ -79,23 +81,18 @@ class AnswerGenerator < ActiveRecord::Base
     @@lines_dictionary ||= lines
     
     question.length.times do |i|
-      ['А'..'Я', 'а'..'я'].each do |range|
-        range.each do |char|
-          duplicate = question.dup
-          duplicate[i] = char
+      ('А'..'Я').each do |char|
+        duplicate = question.dup
+        duplicate[i] = char
 
-          q << @@lines_dictionary[duplicate.chars.sort.join.strip]
-          #binding.pry
-          
-          break unless q.compact.empty?
-        end
+        q << @@lines_dictionary[(Unicode::upcase duplicate).chars.sort.join.strip]
+        
         break unless q.compact.empty?
       end
+      break unless q.compact.empty?
     end
     q.uniq!.compact!
-    #puts q.join ' '
 
-    #binding.pry
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
@@ -120,10 +117,11 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_poem_by_string_without_punctuation(string)
-    Poem.all.each do |poem|
-      return poem if poem.body.gsub(/,|\.|\?|!|:|;||\)/, '') =~ /#{string}/
-    end
-    nil
+    #Poem.all.each do |poem|
+    #  return poem if poem.body.gsub(/,|\.|\?|!|:|;||\)/, '') =~ /#{string}/
+    #end
+    #nil
+    Poem.basic_search(string).first
   end
 
   def find_string_with_punctuation_in_poem_by_string_without_punctuation(poem, string)
@@ -181,7 +179,7 @@ class AnswerGenerator < ActiveRecord::Base
     lines_hash = Hash.new
     lines.each do |line|
       word = line.chomp
-      lines_hash[word.split('').sort!.join('').strip] = word
+      lines_hash[(Unicode::upcase word).split('').sort!.join('').strip] = word
 
     end
     lines_hash
