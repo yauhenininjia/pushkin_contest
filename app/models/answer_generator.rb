@@ -2,14 +2,7 @@ class AnswerGenerator < ActiveRecord::Base
 
 
   def level1(question)
-    #poem = find_poem_by_full_string(question)
-    #title = poem.try(:title)
-
     Poem.basic_search(question).first.title
-
-    #Poem.search(question).first.title
-
-    #Poem.pluck(:body, :title).find { |p| p[0] =~ /#{question}/ }[1]
   end
 
   def level2(*questions)
@@ -40,7 +33,7 @@ class AnswerGenerator < ActiveRecord::Base
     q = question.gsub(/,|\.|\?|!|:|;|\)/, '').split
     q.each do |current_word|
       q[q.index current_word] = '%WORD%'
-      new_question = q.join ' '#q.join(' ').sub /\s#{current_word}\s/, ' %WORD% '
+      new_question = q.join ' '
       
       q[q.index '%WORD%'] = current_word
       answer = level2(new_question)
@@ -57,9 +50,6 @@ class AnswerGenerator < ActiveRecord::Base
       q << @@words_dictionary[anagram.chars.sort.join]
     end
 
-    #@@lines_dictionary ||= lines
-    #q << @@lines_dictionary[(Unicode::upcase question).chars.sort.join.strip]
-    
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
@@ -108,19 +98,15 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_poem_with_replaced_word(splited)
-    #Poem.where('body ~* ?', splited[0] + '[А-Яа-я]*' + splited[2]).first
-    #Poem.search("#{splited[0]} * #{splited[2]}").first
-    Poem.basic_search("#{splited[0]} * #{splited[2]}").each do |poem|
-      return poem if poem.body =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/
-    end
-    nil
+    #Poem.basic_search("#{splited[0]} * #{splited[2]}").each do |poem|
+    #  return poem if poem.body =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/
+    #end
+    #nil
+
+    Poem.basic_search("#{splited[0]} * #{splited[2]}").first
   end
 
   def find_poem_by_string_without_punctuation(string)
-    #Poem.all.each do |poem|
-    #  return poem if poem.body.gsub(/,|\.|\?|!|:|;||\)/, '') =~ /#{string}/
-    #end
-    #nil
     Poem.basic_search(string).first
   end
 
@@ -131,7 +117,6 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def find_replaced_word_in_poem(text, splited)
-
     if splited[0].empty?
       replaced_word = text.split(splited[2])[0].split(/\s|"|\(/)[-1] if text && text.length > text.split(splited[2])[0].length
     elsif splited[2].empty?
@@ -141,12 +126,6 @@ class AnswerGenerator < ActiveRecord::Base
     end
     
     replaced_word
-
-=begin
-    # up to 9 times slowly
-    poem = text.split("\n").find{ |s| s =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/ } if text
-    poem.sub(splited[0].gsub(/\A\p{Space}*/, ''), '').sub(splited[2], '').strip.gsub(/,|\.|\?|!|:|;|\)|—/, '') if text && poem
-=end
   end
 
   def words
@@ -188,8 +167,8 @@ class AnswerGenerator < ActiveRecord::Base
   def regexp_with_punctuation_from(string)
     result = ''
     string.split.each do |word|
-    result += word + '([,|\.|\?|!|:|;|\)])*\s*'
-      end
+      result += word + '([,|\.|\?|!|:|;|\)])*\s*'
+    end
     result
   end
 

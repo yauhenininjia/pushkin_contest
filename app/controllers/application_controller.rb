@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
       task_id: task_id
     }
     
-    @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by'})
+    @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', timeout: 20})
     res = @@session.post('/quiz', parameters)#Curl.post(QUIZ_URI.to_s, parameters)#Net::HTTP.post_form(QUIZ_URI, parameters)
     logger.info "RESPONCE: #{res.body}"
   end
