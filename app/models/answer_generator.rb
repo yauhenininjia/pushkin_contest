@@ -47,9 +47,8 @@ class AnswerGenerator < ActiveRecord::Base
     q = []
     @@words_dictionary ||= words
     question.split.each do |anagram|
-      q << @@words_dictionary[anagram.chars.sort.join]
+      q << @@words_dictionary[anagram.chars.sort.join].join('|')
     end
-
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
@@ -140,8 +139,8 @@ class AnswerGenerator < ActiveRecord::Base
     words_hash = Hash.new
     words.each do |line|
       word = line.chomp
-      words_hash[word.split('').sort!.join('')] = word
-
+      words_hash[word.split('').sort!.join('')] ||= []
+      words_hash[word.split('').sort!.join('')] << word
     end
     words_hash
   end
