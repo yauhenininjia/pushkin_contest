@@ -60,8 +60,10 @@ class ApplicationController < ActionController::Base
     }
 
     @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by'})
-    res = @@session.post('/quiz', parameters)
+    response = @@session.post('/quiz', parameters)
+
+    logger.info "RESPONCE: #{response.body}"
+
     
-    logger.info "RESPONCE: #{res.body}"
   end
 end
