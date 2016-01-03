@@ -48,7 +48,6 @@ class AnswerGenerator < ActiveRecord::Base
     q.each do |current_word|
       new_q =  q.join(' ').gsub(current_word, '*')
       @poem = Poem.advanced_search(new_q).first
-      #binding.pry
       if @poem && @poem.body.gsub(/,|\.|\?|!|:|;|\)/, '') =~ /#{new_q.split('*')[0]}.*#{new_q.split('*')[1]}/#/#{new_q}/
         if q.index(current_word) == 0
           correct_word = @poem.body.split("\n").join(' ')
