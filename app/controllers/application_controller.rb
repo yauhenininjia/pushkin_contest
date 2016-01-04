@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     render nothing: true
     puts Time.now - start
     @@thread = Thread.new do |variable|
-      4.times do
+      3.times do
         send_answer('answer', 123123)
         puts 'successfully sended'
         sleep 1
