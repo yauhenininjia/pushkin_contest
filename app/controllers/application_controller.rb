@@ -6,10 +6,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, only: [:registration, :quiz]
 
-  after_action :foo
-  def foo
-    30.times { |i| send_answer 'foo', 123123 }
-  end
+  #after_action :foo
+  #def foo
+  #  30.times { |i| send_answer 'foo', 123123 }
+  #end
 
 
   def index
@@ -35,6 +35,14 @@ class ApplicationController < ActionController::Base
     send_answer answer, id
     render nothing: true
     puts Time.now - start
+    @@thread = Thread.new do |variable|
+      4.times do
+        send_answer('answer', 123123)
+        puts 'successfully sended'
+        sleep 1
+      end
+    end
+    @@thread.join
   end
 
   def registration
