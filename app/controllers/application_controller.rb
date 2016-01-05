@@ -6,12 +6,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, only: [:registration, :quiz]
 
-  #after_action :foo
-  #def foo
-  #  30.times { |i| send_answer 'foo', 123123 }
-  #end
-
-
   def index
     #render text: 'Pushkin'
   end
@@ -33,16 +27,8 @@ class ApplicationController < ActionController::Base
     logger.info answer
 
     send_answer answer, id
-    render nothing: true
+    render text: "#{Time.now - start}\n"#nothing: true
     puts Time.now - start
-    @@thread = Thread.new do |variable|
-      3.times do
-        send_answer('answer', 123123)
-        puts 'successfully sended'
-        sleep 1
-      end
-    end
-    @@thread.join
   end
 
   def registration
@@ -74,11 +60,10 @@ class ApplicationController < ActionController::Base
       task_id: task_id
     }
 
-    @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by'})
+    @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {Connection: 'keep-alive'}, timeout: 10})
+
     response = @@session.post('/quiz', parameters)
-
-    #logger.info "RESPONCE: #{response.body}"
-
     
+    logger.info "RESPONCE: #{response.body}"
   end
 end
