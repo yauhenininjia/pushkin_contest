@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     logger.info answer
 
     send_answer answer, id
-    render text: "#{Time.now - start}\n"#nothing: true
+    render nothing: true
     puts Time.now - start
   end
 
