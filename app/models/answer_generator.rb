@@ -7,7 +7,7 @@ class AnswerGenerator < ActiveRecord::Base
 
   def level2(*questions)
     @answer = []
-    @poem = nil
+    @poem = Poem.basic_search(questions.join.gsub('%WORD%', '')).first
     questions.each do |question|
       splited = question.partition '%WORD%'
       
