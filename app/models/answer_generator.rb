@@ -141,7 +141,8 @@ class AnswerGenerator < ActiveRecord::Base
     elsif splited[2].empty?
       replaced_word = text.split(splited[0])[1].split(/\s|,|\.|\?|!|:|;|\(|\)|"/)[0] if text && text.length > text.split(splited[0])[1].length
     else
-      replaced_word = text.split(splited[0])[1].split(splited[2])[0] if text && text.split(splited[0])[1] && text.length > text.split(splited[0])[1].length
+      replaced_word = (text.scan(/#{splited[0]}.*#{splited[2]}/).first.split(splited[0]).last.split(splited[2]).first if text && text.scan(/#{splited[0]}.*#{splited[2]}/).first && text.scan(/#{splited[0]}.*#{splited[2]}/).first.split(splited[0]).last) ||
+        text.split(splited[0])[1].split(splited[2])[0] if text && text.split(splited[0])[1] && text.length > text.split(splited[0])[1].length
     end
     
     replaced_word
