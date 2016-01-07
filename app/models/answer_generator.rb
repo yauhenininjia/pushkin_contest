@@ -7,9 +7,9 @@ class AnswerGenerator < ActiveRecord::Base
 
   def level2(*questions)
     @answer = []
+    @poem = nil
     questions.each do |question|
       splited = question.partition '%WORD%'
-
       
       @poem ||= find_poem_with_replaced_word(splited)
       

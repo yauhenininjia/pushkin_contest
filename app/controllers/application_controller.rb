@@ -20,8 +20,6 @@ class ApplicationController < ActionController::Base
     answer = @@generator.send "level#{level}", question
 
     logger.info answer
-    q = "%WORD%И никого не называю милой —\n%WORD% раз любил, уж не полюбит вновь;"
-    logger.info "SAMPLE ANSWER: #{@@generator.level3(q)}"
 
     send_answer answer, id
     render nothing: true
