@@ -12,24 +12,19 @@ class ApplicationController < ActionController::Base
   end
 
   def quiz
-    start = Time.now
     question = params[:question]
     id = params[:id]
     level = params[:level]
-    #q = Question.new body: question, level: level, rubyroid_id: id
     
     @@generator ||= AnswerGenerator.new
     answer = @@generator.send "level#{level}", question
-    #a = Answer.new body: answer, level: level, question: q
-
-    #q.save
-    #a.save
 
     logger.info answer
+    q = "%WORD%И никого не называю милой —\n%WORD% раз любил, уж не полюбит вновь;"
+    logger.info "SAMPLE ANSWER: #{@@generator.level3(q)}"
 
     send_answer answer, id
     render nothing: true
-    puts Time.now - start
   end
 
   def registration
