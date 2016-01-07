@@ -308,6 +308,20 @@ CREATE INDEX poems_to_tsvector_idx1 ON poems USING gin (to_tsvector('russian'::r
 
 
 --
+-- Name: poems_to_tsvector_idx2; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX poems_to_tsvector_idx2 ON poems USING gin (to_tsvector('russian'::regconfig, body));
+
+
+--
+-- Name: poems_to_tsvector_idx3; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX poems_to_tsvector_idx3 ON poems USING gin (to_tsvector('russian'::regconfig, body));
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -347,4 +361,8 @@ INSERT INTO schema_migrations (version) VALUES ('20151221190806');
 INSERT INTO schema_migrations (version) VALUES ('20151225145550');
 
 INSERT INTO schema_migrations (version) VALUES ('20151225145933');
+
+INSERT INTO schema_migrations (version) VALUES ('20160107122231');
+
+INSERT INTO schema_migrations (version) VALUES ('20160107122937');
 
