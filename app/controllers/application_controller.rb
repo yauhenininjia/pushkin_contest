@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
       task_id: task_id
     }
 
-    $session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {"Keep-Alive": "timeout=2, max=1000"}, timeout: 2})
+    $session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {"Keep-Alive" => "timeout=2, max=1000"}, timeout: 2})
 
     response = $session.post('/quiz', parameters)
     logger.info "RESPONCE: #{response.body}"
