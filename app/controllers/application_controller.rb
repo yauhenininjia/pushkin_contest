@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, only: [:registration, :quiz]
+  
 
   def index
     #render text: 'Pushkin'
@@ -60,10 +61,9 @@ class ApplicationController < ActionController::Base
       task_id: task_id
     }
 
-    $session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {Connection: 'keep-alive'}, timeout: 10})
+    $session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {"Keep-Alive": "timeout=2, max=1000"}, timeout: 2})
 
     response = $session.post('/quiz', parameters)
-    
     logger.info "RESPONCE: #{response.body}"
   end
 end
