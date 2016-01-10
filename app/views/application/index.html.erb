@@ -1,0 +1,9 @@
+<h1>Pushkin</h1>
+<br>
+<%= form_tag quiz_path, method: :post, url: quiz_url + '.json' do |f| %>
+<% hidden_field_tag :question, value: "Я во дворянстве мещанин" %>
+<% hidden_field_tag :level, value: 1 %>
+<% hidden_field_tag :id, value: 609832 %>
+
+<%= submit_tag :level1 %>
+<% end %>

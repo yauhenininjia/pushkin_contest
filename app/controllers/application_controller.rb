@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, only: [:registration, :quiz]
-
+  
 
   def index
     #
@@ -13,16 +13,12 @@ class ApplicationController < ActionController::Base
   end
 
   def quiz
-    question, id, level = params[:question], params[:id], params[:level]
-    q = Question.new body: question, level: level, rubyroid_id: id
-
-    logger.info params
-
-    answer = AnswerGenerator.new.send "level#{level}", question
-    a = Answer.new body: answer, level: level, question: q
-
-    #q.save
-    #a.save
+    question = params[:question]
+    id = params[:id]
+    level = params[:level]
+    
+    @@generator ||= AnswerGenerator.new
+    answer = @@generator.send "level#{level}", question
 
     logger.info answer
 
@@ -52,12 +48,16 @@ class ApplicationController < ActionController::Base
   QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
 
   def send_answer(answer, task_id)
+    $token ||= Token.last.user_token
     parameters = {
       answer: answer,
-      token: Token.last.user_token,
+      token: $token,
       task_id: task_id
     }
-    logger.info parameters
-    Net::HTTP.post_form(QUIZ_URI, parameters)
+
+    $session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {"Keep-Alive" => "timeout=2, max=1000"}, timeout: 2})
+
+    response = $session.post('/quiz', parameters)
+    logger.info "RESPONCE: #{response.body}"
   end
 end

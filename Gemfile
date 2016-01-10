@@ -47,3 +47,8 @@ group :development do
 end
 
 gem 'nokogiri'
+gem 'textacular', '~> 3.0'
+gem 'patron'
+gem 'unicode'
+gem 'puma'
+gem 'mechanize'
