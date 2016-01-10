@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
 
   def index
+    #
     render text: 'Pushkin'
   end
 
