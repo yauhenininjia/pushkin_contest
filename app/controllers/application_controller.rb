@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   
 
   def index
+    loop do
+    end
     #render text: 'Pushkin'
   end
 
