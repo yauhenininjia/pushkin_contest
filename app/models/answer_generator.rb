@@ -30,21 +30,8 @@ class AnswerGenerator < ActiveRecord::Base
   end
 
   def level5(question)
-
     q = question.gsub(/,|\.|\?|!|:|;|\)/, '').split
-=begin
-    q.each do |current_word|
-      q[q.index current_word] = '%WORD%'
-      new_question = q.join ' '
-      
-      q[q.index '%WORD%'] = current_word
-      answer = level2(new_question)
-      
-      return "#{answer},#{current_word}" unless answer.blank?
-    end
-    nil
-=end
-#=begin
+
     q.each do |current_word|
       new_q =  q.join(' ').gsub(current_word, '*')
       @poem = Poem.advanced_search(new_q).first
@@ -60,7 +47,6 @@ class AnswerGenerator < ActiveRecord::Base
         return "#{correct_word},#{current_word}"
       end
     end
-#=end
   end
 
   def level6(question)
@@ -79,8 +65,6 @@ class AnswerGenerator < ActiveRecord::Base
     
     q << @@lines_dictionary[(Unicode::upcase question).chars.sort.join.strip]
     
-    #puts q.join ' '
-
     poem = find_poem_by_string_without_punctuation q.join ' '
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
@@ -106,22 +90,13 @@ class AnswerGenerator < ActiveRecord::Base
     find_string_with_punctuation_in_poem_by_string_without_punctuation poem, q.join(' ')
   end
 
-  #7 "ротаик вбонесвройС й йытто"
-  #Parameters: {"question"=>"втн н еястлеН яи овчаа", "id"=>794977, "level"=>8}
-  # "лр ыо нлвечдГНаеуиа уциоя "
-
-  #private
+  private
 
   def find_poem_by_full_string(string)
     find_poem_with_replaced_word string.partition ''
   end
 
   def find_poem_with_replaced_word(splited)
-    #Poem.basic_search("#{splited[0]} * #{splited[2]}").each do |poem|
-    #  return poem if poem.body =~ /#{splited[0].gsub(/\A\p{Space}*/, '').strip}.*#{splited[2]}/
-    #end
-    #nil
-
     Poem.basic_search("#{splited[0]} * #{splited[2]}").first
   end
 

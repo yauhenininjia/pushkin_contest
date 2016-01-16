@@ -48,16 +48,16 @@ class ApplicationController < ActionController::Base
   QUIZ_URI = URI("http://pushkin.rubyroid.by/quiz")
 
   def send_answer(answer, task_id)
-    $token ||= Token.last.user_token
+    @@token ||= Token.last.user_token
     parameters = {
       answer: answer,
-      token: $token,
+      token: @@token,
       task_id: task_id
     }
 
-    $session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by', headers: {"Keep-Alive" => "timeout=2, max=1000"}, timeout: 2})
+    @@session ||= Patron::Session.new({base_url: 'http://pushkin.rubyroid.by'})
 
-    response = $session.post('/quiz', parameters)
-    logger.info "RESPONCE: #{response.body}"
+    response = @@session.post('/quiz', parameters)
+    logger.info "RESPONSE: #{response.body}"
   end
 end
